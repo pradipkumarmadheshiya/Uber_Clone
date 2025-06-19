@@ -12,7 +12,7 @@ const UserSignup = () => {
 
   const submitHandler=(e)=>{
     e.preventDefault()
-    setUserData({username:{firstname, lastname}, email:email, password:password})
+    setUserData({fullname:{firstname, lastname}, email:email, password:password})
     setFirstname("")
     setLastName("")
     setEmail("")

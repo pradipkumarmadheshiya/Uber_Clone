@@ -12,7 +12,7 @@ const CaptainSignup = () => {
 
   const submitHandler=(e)=>{
     e.preventDefault()
-    setCaptainData({username:{firstname, lastname}, email:email, password:password})
+    setCaptainData({fullname:{firstname, lastname}, email:email, password:password})
     console.log(captainData)
     setFirstname("")
     setLastName("")
@@ -26,7 +26,7 @@ const CaptainSignup = () => {
         <img className='w-16 mb-10' src={assets.captain_uber_logo} alt="" />
 
         <form onSubmit={submitHandler}>
-          <h3 className='text-lg mb-2'>What's your name</h3>
+          <h3 className='text-lg mb-2'>What's our captain's name</h3>
           <div className='flex gap-3 mb-5'>
             <input className='bg-gray-100 w-1/2 rounded px-4 py-2 text-base placeholder:text-base'
             type="text" name="firstname" placeholder='Your First Name' required 
@@ -36,7 +36,7 @@ const CaptainSignup = () => {
             value={lastname} onChange={(e)=>{setLastName(e.target.value)}}/>
           </div>
 
-          <h3 className='text-lg mb-2'>What's your email</h3>
+          <h3 className='text-lg mb-2'>What's our captain's email</h3>
           <input className='bg-gray-100 mb-5 rounded px-4 py-2  w-full text-base placeholder:text-base'
           type="email" name="email" placeholder='email@example.com' required 
           value={email} onChange={(e)=>{setEmail(e.target.value)}}/>

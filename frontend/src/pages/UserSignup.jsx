@@ -1,18 +1,34 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {assets} from "../assets/assets"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
+import axios from "axios"
+import { UserDataContext } from "../context/UserContext"
 
 const UserSignup = () => {
 
+  const navigate= useNavigate()
+  const {user, setUser}=useContext(UserDataContext)
   const [firstname, setFirstname]=useState("")
   const [lastname, setLastName]=useState("")
   const [email, setEmail]=useState("")
   const [password, setPassword]=useState("")
-  const [userData, setUserData]=useState({})
 
-  const submitHandler=(e)=>{
+  const submitHandler=async(e)=>{
     e.preventDefault()
-    setUserData({fullname:{firstname, lastname}, email:email, password:password})
+    const newUser=({
+      fullname:{firstname, lastname},
+      email:email, 
+      password:password
+    })
+
+    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
+    if (response.status===201){
+      const data=response.data
+      setUser(data.user)
+      localStorage.setItem("token", data.token)
+      navigate("/home")
+    }
+
     setFirstname("")
     setLastName("")
     setEmail("")
@@ -31,7 +47,7 @@ const UserSignup = () => {
             type="text" name="firstname" placeholder='Your First Name' required 
             value={firstname} onChange={(e)=>{setFirstname(e.target.value)}}/>
             <input className='bg-gray-100 w-1/2 rounded px-4 py-2 text-base placeholder:text-base'
-            type="text" name="lastname" placeholder='Your Last Name' required 
+            type="text" name="lastname" placeholder='Your Last Name'
             value={lastname} onChange={(e)=>{setLastName(e.target.value)}}/>
           </div>
 
@@ -46,7 +62,7 @@ const UserSignup = () => {
           value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
 
           <button className='bg-[#111] text-[#fff] font-semibold mb-3 rounded px-4 py-2  w-full text-lg'>
-            SignUp
+            Create Account
           </button>
 
           <p className='text-center'>

@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {assets} from "../assets/assets"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
+import { CaptainDataContext } from '../context/CaptainContext'
+import axios from 'axios'
 
 const CaptainSignup = () => {
 
@@ -8,16 +10,44 @@ const CaptainSignup = () => {
   const [lastname, setLastName]=useState("")
   const [email, setEmail]=useState("")
   const [password, setPassword]=useState("")
-  const [captainData, setCaptainData]=useState({})
+  const [color, setColor]=useState("")
+  const [plate, setPlate]=useState("")
+  const [capacity, setCapacity]=useState(1)
+  const [vehicleType, setVehicleType]=useState("")
+  const navigate=useNavigate()
 
-  const submitHandler=(e)=>{
+  const {captain, setCaptain}= useContext(CaptainDataContext)
+
+  const submitHandler=async(e)=>{
     e.preventDefault()
-    setCaptainData({fullname:{firstname, lastname}, email:email, password:password})
-    console.log(captainData)
+    const captainData={fullname:{firstname, lastname}, email:email, password:password,
+      vehicle:{
+        color, plate, capacity, vehicleType
+      }
+    }
+
+    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
+  try{
+    if (response.status===201){
+      const data=response.data
+      setCaptain(data.captain)
+      localStorage.setItem("captain-token", data.token)
+      navigate("/captain-home")
+    }
+  }
+  catch(err){
+    console.log("err:",err)
+  }
+  
+
     setFirstname("")
     setLastName("")
     setEmail("")
     setPassword("")
+    setColor("")
+    setPlate("")
+    setCapacity(1)
+    setVehicleType("")
   }
 
   return (
@@ -32,7 +62,7 @@ const CaptainSignup = () => {
             type="text" name="firstname" placeholder='Your First Name' required 
             value={firstname} onChange={(e)=>{setFirstname(e.target.value)}}/>
             <input className='bg-gray-100 w-1/2 rounded px-4 py-2 text-base placeholder:text-base'
-            type="text" name="lastname" placeholder='Your Last Name' required 
+            type="text" name="lastname" placeholder='Your Last Name'
             value={lastname} onChange={(e)=>{setLastName(e.target.value)}}/>
           </div>
 
@@ -46,11 +76,37 @@ const CaptainSignup = () => {
           type="password" placeholder='Password' required 
           value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
 
+          <h3 className='text-lg mb-2'>Enter your vehicle color</h3>
+          <input className='bg-gray-100 mb-5 rounded px-4 py-2  w-full text-base placeholder:text-base'
+          type="text" name='color' placeholder='Vehicle color' required 
+          value={color} onChange={(e)=>{setColor(e.target.value)}}/>
+
+          <h3 className='text-lg mb-2'>Enter your vehicle plate</h3>
+          <input className='bg-gray-100 mb-5 rounded px-4 py-2  w-full text-base placeholder:text-base'
+          type="text" placeholder='Vehicle plate' required 
+          value={plate} onChange={(e)=>{setPlate(e.target.value)}}/>
+
+          <h3 className='text-lg mb-2'>Enter your vehicle capacity</h3>
+          <input className='bg-gray-100 mb-5 rounded px-4 py-2  w-full text-base placeholder:text-base'
+          type="number" name="capacity" placeholder='Vehicle capacity' required 
+          value={capacity} onChange={(e)=>{setCapacity(e.target.value)}}/>
+
+          <h3 className='text-lg mb-2'>Enter your vehicle type</h3>
+          <select required
+          value={vehicleType}
+          onChange={(e)=>setVehicleType(e.target.value)}
+          className='bg-[#eeeeee] w-full rounded-lg px-4 py-2 border text-lg placeholder:text-base mb-6'>
+            <option value="" disabled>Select Vehicle</option>
+            <option value="motorcycle">Bike</option>
+            <option value="auto">Auto</option>
+            <option value="car">Car</option>
+          </select>
+
           <button className='bg-[#111] text-[#fff] font-semibold mb-3 rounded px-4 py-2  w-full text-lg'>
             SignUp
           </button>
 
-          <p className='text-center'>
+          <p className='text-center mb-16'>
             Already have an account?
             <Link to={"/captain-login"} className='text-blue-600 underline'>
               Login

@@ -33,7 +33,7 @@ const CaptainProtectWrapper = ({children}) => {
 
 
     if (isLoading){
-        return <div className='p-16'>Loading...</div>
+        return <div className='p-10'>Loading...</div>
     }
 
   return (

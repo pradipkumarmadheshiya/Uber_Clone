@@ -5,6 +5,9 @@ import car from "./car.jpg"
 import bike from "./bike.webp"
 import auto from "./auto.webp"
 import map from "./map.jpg"
+import map_2 from "./map_2.jpg"
+import captain_img from "./captain_img.jpg"
+import random_people from "./random_people.jpg"
 
 export const assets={
     bg,
@@ -13,5 +16,8 @@ export const assets={
     car,
     bike,
     auto,
-    map
+    map,
+    map_2,
+    captain_img,
+    random_people
 }

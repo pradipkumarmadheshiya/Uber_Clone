@@ -51,7 +51,7 @@ const RidePopUp = (props) => {
         <div className="flex items-center justify-between w-full mt-5">
           <button
             onClick={() => props.setConfirmRidePopUp(true)}
-            className="bg-green-600 text-white font-semibold p-2 px-8 rounded-lg"
+            className="bg-green-600 text-white font-semibold p-2 px-8 rounded-lg cursor-pointer"
           >
             Accept
           </button>
@@ -59,7 +59,7 @@ const RidePopUp = (props) => {
             onClick={() => {
               props.setRidePopUpPanel(false);
             }}
-            className="bg-gray-300 text-gray-700 font-semibold p-2 px-8 rounded-lg"
+            className="bg-gray-300 text-gray-700 font-semibold p-2 px-8 rounded-lg cursor-pointer"
           >
             Ignore
           </button>

@@ -52,7 +52,7 @@ const CaptainRiding = () => {
         </h5>
 
         <h4 className="text-lg font-semibold">4 km away</h4>
-        <button className="bg-green-600 text-white font-semibold p-2 px-4 rounded-lg">
+        <button className="bg-green-600 text-white font-semibold p-2 px-4 rounded-lg cursor-pointer">
           Complete Ride
         </button>
       </div>

@@ -1,8 +1,8 @@
 import bg from "./bg.jpeg"
 import logo from "./logo.png"
 import captain_uber_logo from "./captain_uber_logo.png"
-import car from "./car.jpg"
-import bike from "./bike.webp"
+import car from "./car.webp"
+import moto from "./moto.webp"
 import auto from "./auto.webp"
 import map from "./map.jpg"
 import map_2 from "./map_2.jpg"
@@ -14,7 +14,7 @@ export const assets={
     logo,
     captain_uber_logo,
     car,
-    bike,
+    moto,
     auto,
     map,
     map_2,

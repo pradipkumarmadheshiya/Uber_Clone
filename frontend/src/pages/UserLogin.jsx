@@ -46,7 +46,7 @@ const Login = () => {
           type="password" placeholder='Password' required 
           value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
 
-          <button className='bg-[#111] text-[#fff] font-semibold mb-3 rounded px-4 py-2  w-full text-lg'>
+          <button className='bg-[#111] text-[#fff] font-semibold mb-3 rounded px-4 py-2  w-full text-lg cursor-pointer'>
             Login
           </button>
 

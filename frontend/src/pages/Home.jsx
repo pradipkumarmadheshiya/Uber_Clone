@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { assets } from "../assets/assets";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -9,6 +9,8 @@ import ConfirmRide from "../component/ConfirmRide";
 import LookingForDriver from "../component/LookingForDriver";
 import WaitingForDriver from "../component/WaitingForDriver";
 import axios from "axios";
+import { SocketContext } from "../context/SocketContext";
+import {UserDataContext} from "../context/UserContext"
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -29,6 +31,13 @@ const Home = () => {
   const confirmRidePanelRef = useRef(null);
   const vehicleFoundRef = useRef(null);
   const waitingForDriverRef = useRef(null);
+
+  const {socket}=useContext(SocketContext)
+  const {user}=useContext(UserDataContext)
+
+  useEffect(()=>{
+    socket.emit("join", {userType:"user", userId:user._id})
+  }, [user])
 
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
@@ -194,7 +203,7 @@ const Home = () => {
           </h5>
           <h4 className="text-2xl font-semibold">Find a trip</h4>
           <form onSubmit={submitHandler}>
-            <div className="line h-16 w-1 absolute bg-gray-800 top-[36%] left-10 rounded-full"></div>
+            <div className="line h-16 w-1 absolute bg-gray-800 top-[36%] left-8 rounded-full"></div>
 
             <input
               onClick={() => {
@@ -203,7 +212,7 @@ const Home = () => {
               }}
               value={pickup}
               onChange={handlePickupChange}
-              className="bg-[#eee] px-8 py-2 text-base rounded-lg w-full mb-3 mt-6"
+              className="bg-[#eee] px-6 py-2 text-base rounded-lg w-full mb-3 mt-6"
               type="text"
               placeholder="Add your pick-up location"
             />
@@ -215,7 +224,7 @@ const Home = () => {
               }}
               value={destination}
               onChange={handleDestinationChange}
-              className="bg-[#eee] px-8 py-2 text-base rounded-lg w-full"
+              className="bg-[#eee] px-6 py-2 text-base rounded-lg w-full"
               type="text"
               placeholder="Enter your destination"
             />
@@ -233,7 +242,7 @@ const Home = () => {
           </form>
         </div>
 
-        <div ref={panelRef} className="opacity-0 h-0 bg-white overflow-y-auto">
+        <div ref={panelRef} className="z-50 opacity-0 h-0 bg-white overflow-y-auto">
           <LocationSearchPanel
             setPanelOpen={setPanelOpen}
             setVehiclePanelOpen={setVehiclePanelOpen}
@@ -251,7 +260,7 @@ const Home = () => {
 
       <div
         ref={vehiclePanelRef}
-        className="fixed z-10 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-8 pt-12"
+        className="fixed z-40 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-8 pt-12"
       >
         <VehiclePanel
           setConfirmRidePanel={setConfirmRidePanel}
@@ -264,7 +273,7 @@ const Home = () => {
 
       <div
         ref={confirmRidePanelRef}
-        className="fixed z-10 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-6 pt-12"
+        className="fixed z-30 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-6 pt-12"
       >
         <ConfirmRide
           setConfirmRidePanel={setConfirmRidePanel}
@@ -279,7 +288,7 @@ const Home = () => {
 
       <div
         ref={vehicleFoundRef}
-        className="fixed z-10 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-6 pt-12"
+        className="fixed z-20 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-6 pt-12"
       >
         <LookingForDriver 
           setVehicleFound={setVehicleFound} 

@@ -23,7 +23,7 @@ const CaptainDetails = () => {
         </div>
       </div>
 
-      <div className="flex justify-center gap-4 p-3 bg-gray-100 rounded-full items-start mt-4">
+      <div className="flex justify-center gap-4 py-3 bg-gray-200 rounded-full items-start mt-8">
         <div className="text-center">
           <i className="text-3xl mb-2 font-thin ri-timer-2-line"></i>
           <h5 className="text-lg font-medium">10.2</h5>

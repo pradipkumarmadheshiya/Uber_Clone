@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 import CaptainDetails from "../component/CaptainDetails";
@@ -6,13 +6,48 @@ import RidePopUp from "../component/RidePopUp";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ConfirmRidePopUp from "../component/ConfirmRidePopUp";
+import { CaptainDataContext } from "../context/CaptainContext";
+import { SocketContext } from "../context/SocketContext";
 
 const CaptainHome = () => {
+  const { socket } = useContext(SocketContext);
+  const { captain } = useContext(CaptainDataContext);
 
-  const [ridePopUpPanel, setRidePopUpPanel] = useState(true);
-  const [confirmRidePopUp, setConfirmRidePopUp]= useState(false)
-  const ridePopUpPanelRef= useRef(null)
-  const confirmRidePopUpRef= useRef(null)
+  const [ridePopUpPanel, setRidePopUpPanel] = useState(false);
+  const [confirmRidePopUp, setConfirmRidePopUp] = useState(false);
+  const ridePopUpPanelRef = useRef(null);
+  const confirmRidePopUpRef = useRef(null);
+  const [ride, setRide]=useState(null)
+
+  useEffect(() => {
+    socket.emit("join", { userType: "captain", userId: captain._id });
+
+    const updateLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          
+          socket.emit("update-location-captain", {
+            userId: captain._id,
+            location: {
+              ltd: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+        });
+      }
+    };
+
+    const locationInterval = setInterval(updateLocation, 10000);
+    updateLocation();
+
+    // return clearInterval(locationInterval)
+  }, []);
+
+  socket.on("new-ride", (data) => {
+    console.log("data", data);
+    setRide(data)
+    setRidePopUpPanel(true)
+  });
 
   useGSAP(
     function () {
@@ -68,12 +103,25 @@ const CaptainHome = () => {
         <CaptainDetails />
       </div>
 
-      <div ref={ridePopUpPanelRef} className="fixed z-10 w-full translate-y-full bottom-0 p-3 bg-white px-3 py-8 pt-12">
-        <RidePopUp setRidePopUpPanel={setRidePopUpPanel} setConfirmRidePopUp={setConfirmRidePopUp}/>
+      <div
+        ref={ridePopUpPanelRef}
+        className="fixed z-10 w-full translate-y-full bottom-0 p-3 bg-white px-3 py-8 pt-12"
+      >
+        <RidePopUp
+          setRidePopUpPanel={setRidePopUpPanel}
+          setConfirmRidePopUp={setConfirmRidePopUp}
+          ride={ride}
+        />
       </div>
 
-      <div ref={confirmRidePopUpRef} className="fixed z-10 w-full h-screen translate-y-full bottom-0 p-3 bg-white px-3 py-8 pt-12">
-        <ConfirmRidePopUp setConfirmRidePopUp={setConfirmRidePopUp} setRidePopUpPanel={setRidePopUpPanel}/>
+      <div
+        ref={confirmRidePopUpRef}
+        className="fixed z-10 w-full h-screen translate-y-full bottom-0 p-3 bg-white px-3 py-8 pt-12"
+      >
+        <ConfirmRidePopUp
+          setConfirmRidePopUp={setConfirmRidePopUp}
+          setRidePopUpPanel={setRidePopUpPanel}
+        />
       </div>
     </div>
   );

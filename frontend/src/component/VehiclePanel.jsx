@@ -11,10 +11,11 @@ const VehiclePanel = (props) => {
       >
         <i className="ri-arrow-down-wide-line text-xl text-gray-400"></i>
       </h5>
-      <h3 className="text-xl font-semibold mb-3">Choose a vehicle</h3>
+      <h3 className="text-xl font-semibold my-3">Choose a vehicle</h3>
 
       <div
         onClick={() => {props.setConfirmRidePanel(true);
+          props.setVehiclePanelOpen(false)
           props.setVehicleType("car")
         }}
         className="flex items-center justify-between w-full p-3 active:border-black border-2 border-gray-300 bg-gray-100 rounded-xl mb-2"
@@ -35,6 +36,7 @@ const VehiclePanel = (props) => {
 
       <div
         onClick={() =>{ props.setConfirmRidePanel(true);
+          props.setVehiclePanelOpen(false);
           props.setVehicleType("moto")
         }}
         className="flex items-center justify-between w-full p-3 border-2 bg-gray-100 active:border-black border-gray-300 rounded-xl mb-2"
@@ -55,6 +57,7 @@ const VehiclePanel = (props) => {
 
       <div
         onClick={() => {props.setConfirmRidePanel(true);
+          props.setVehiclePanelOpen(false);
           props.setVehicleType("auto")
         }}
         className="flex items-center justify-between w-full p-3 border-2 bg-gray-100 active:border-black border-gray-300 rounded-xl mb-2"

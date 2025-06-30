@@ -19,9 +19,9 @@ const RidePopUp = (props) => {
             src={assets.random_people}
             alt=""
           />
-          <h2 className="text-lg font-medium">Ankit Sharma</h2>
+          <h2 className="text-lg font-medium">{props.ride?.user.fullname.firstname+" "+props.ride?.user.fullname.lastname}</h2>
         </div>
-        <h5>2.2 KM</h5>
+        <h5>KM</h5>
       </div>
 
       <div className="flex flex-col justify-between items-center gap-3">
@@ -29,21 +29,21 @@ const RidePopUp = (props) => {
           <div className="flex items-center gap-4 border-b-2 border-gray-300 p-3">
             <i className="ri-map-pin-user-line"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-gray-700 -mt-1">Lake city, Bhopal</p>
+              <h3 className="text-lg font-medium">{props.ride?.pickup.split(" ")[0]}</h3>
+              <p className="text-gray-700 -mt-1">{props.ride?.pickup}</p>
             </div>
           </div>
           <div className="flex items-center gap-4 border-b-2 border-gray-300 p-3">
             <i className="ri-map-pin-line"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-gray-700 -mt-1">Lake city, Bhopal</p>
+              <h3 className="text-lg font-medium">{props.ride?.destination.split(" ")[0]}</h3>
+              <p className="text-gray-700 -mt-1">{props.ride?.destination}</p>
             </div>
           </div>
           <div className="flex items-center gap-4 p-3">
             <i className="ri-currency-line"></i>
             <div>
-              <h3 className="text-lg font-medium">₹193</h3>
+              <h3 className="text-lg font-medium">₹{props.ride?.fare}</h3>
               <p className="text-gray-700 -mt-1">Cash Cash</p>
             </div>
           </div>

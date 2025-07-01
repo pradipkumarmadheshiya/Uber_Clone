@@ -10,7 +10,8 @@ import LookingForDriver from "../component/LookingForDriver";
 import WaitingForDriver from "../component/WaitingForDriver";
 import axios from "axios";
 import { SocketContext } from "../context/SocketContext";
-import {UserDataContext} from "../context/UserContext"
+import { UserDataContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -24,6 +25,7 @@ const Home = () => {
   const [vehicleFound, setVehicleFound] = useState(false);
   const [waitingForDriver, setWaitingForDriver] = useState(false);
   const [activeField, setActiveField] = useState(null);
+  const [ride, setRide]=useState(null)
   const [fare, setFare] = useState({});
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
@@ -32,12 +34,24 @@ const Home = () => {
   const vehicleFoundRef = useRef(null);
   const waitingForDriverRef = useRef(null);
 
-  const {socket}=useContext(SocketContext)
-  const {user}=useContext(UserDataContext)
+  const { socket } = useContext(SocketContext);
+  const { user } = useContext(UserDataContext);
+  const navigate=useNavigate()
 
-  useEffect(()=>{
-    socket.emit("join", {userType:"user", userId:user._id})
-  }, [user])
+  useEffect(() => {
+    socket.emit("join", { userType: "user", userId: user._id });
+  }, [user]);
+
+  socket.on("ride-confirmed", (ride) => {
+    setVehicleFound(false);
+    setWaitingForDriver(true);
+    setRide(ride);
+  });
+
+  socket.on("ride-started", data=>{
+    setWaitingForDriver(false)
+    navigate("/riding")
+  })
 
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
@@ -242,7 +256,10 @@ const Home = () => {
           </form>
         </div>
 
-        <div ref={panelRef} className="z-50 opacity-0 h-0 bg-white overflow-y-auto">
+        <div
+          ref={panelRef}
+          className="z-50 opacity-0 h-0 bg-white overflow-y-auto"
+        >
           <LocationSearchPanel
             setPanelOpen={setPanelOpen}
             setVehiclePanelOpen={setVehiclePanelOpen}
@@ -290,8 +307,8 @@ const Home = () => {
         ref={vehicleFoundRef}
         className="fixed z-20 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-6 pt-12"
       >
-        <LookingForDriver 
-          setVehicleFound={setVehicleFound} 
+        <LookingForDriver
+          setVehicleFound={setVehicleFound}
           vehicleType={vehicleType}
           pickup={pickup}
           destination={destination}
@@ -303,7 +320,12 @@ const Home = () => {
         ref={waitingForDriverRef}
         className="fixed z-10 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-6 pt-12"
       >
-        <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
+        <WaitingForDriver 
+        setWaitingForDriver={setWaitingForDriver} 
+        setVehicleFound={setVehicleFound}
+        waitingForDriver={waitingForDriver}
+        ride={ride}
+        />
       </div>
     </div>
   );

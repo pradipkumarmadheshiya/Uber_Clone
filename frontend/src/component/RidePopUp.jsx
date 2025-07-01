@@ -21,7 +21,7 @@ const RidePopUp = (props) => {
           />
           <h2 className="text-lg font-medium">{props.ride?.user.fullname.firstname+" "+props.ride?.user.fullname.lastname}</h2>
         </div>
-        <h5>KM</h5>
+        <h5>2.2KM</h5>
       </div>
 
       <div className="flex flex-col justify-between items-center gap-3">
@@ -50,11 +50,12 @@ const RidePopUp = (props) => {
         </div>
         <div className="flex items-center justify-between w-full mt-5">
           <button
-            onClick={() => props.setConfirmRidePopUp(true)}
+            onClick={() => {props.setConfirmRidePopUp(true); props.confirmRide()}}
             className="bg-green-600 text-white font-semibold p-2 px-8 rounded-lg cursor-pointer"
           >
             Accept
           </button>
+
           <button
             onClick={() => {
               props.setRidePopUpPanel(false);

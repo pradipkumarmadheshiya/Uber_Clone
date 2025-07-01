@@ -7,12 +7,12 @@ const captainModel = require("../models/captain.model")
 module.exports.authUser= async(req, res, next)=>{
     const token= req.cookies.token || req.headers.authorization?.split(" ")[1]
     if (!token){
-        return res.status(401).json({message: "Unathorized"})
+        return res.status(401).json({message: "Unathorized- No token provided"})
     }
 
     const isBlackListed=await blackListTokenModel.findOne({token:token})
     if (isBlackListed){
-        return res.status(401).json({message:"Unauthorised"})
+        return res.status(401).json({message:"Unauthorised- Token blacklisted"})
     }
 
     try {
@@ -21,7 +21,8 @@ module.exports.authUser= async(req, res, next)=>{
         req.user=user
         return next()
         
-    } catch (error) {
+    } catch (err) {
+        console.log("err", err)
         return res.status(401).json({message: "Unathorized"})
     }
 }
@@ -29,11 +30,12 @@ module.exports.authUser= async(req, res, next)=>{
 module.exports.authCaptain=async(req, res, next)=>{
     const token=req.cookies.token || req.headers.authorization?.split(" ")[1]
     if (!token){
-        return res.status(401).json({message:"Unauthorized"})
+        return res.status(401).json({message:"Unauthorized- No token provided"})
     }
+
     const isBlackListed=await blackListTokenModel.findOne({token:token})
     if (isBlackListed){
-        return res.status(401).json({message:"Unauthorized"})
+        return res.status(401).json({message:"Unauthorized- Token blacklisted"})
     }
 
     try {
@@ -42,7 +44,7 @@ module.exports.authCaptain=async(req, res, next)=>{
         req.captain=captain
         return next()
     } catch (error) {
-        console.log("err:-", error)
-        res.status(401).json({message:"Unauthorized"})
+        console.log("JWT Verify Error:", error.message);
+        res.status(401).json({message:"Unauthorized- invalid token"})
     }
 }

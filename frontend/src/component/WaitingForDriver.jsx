@@ -13,9 +13,10 @@ const WaitingForDriver = (props) => {
         <img className='h-10 mt-2'
           src={assets.car} alt="car" />
         <div className='text-right'>
-          <h2 className='text-lg font-medium'>Pradip</h2>
-          <h4 className='text-xl font-semibold -mt-1 -mb-1'>MP 04 AB 1234</h4>
+          <h2 className='text-lg font-medium'>{props.ride?.captain.fullname.firstname+" "+props.ride?.captain.fullname.lastname}</h2>
+          <h4 className='text-xl font-semibold -mt-1 -mb-1'>{props.ride?.captain.vehicle.plate}</h4>
           <p className='text-sm text-gray-600'>Maruti Suzuki Alto</p>
+          <h4 className='text-lg font-semibold'>{props.ride?.otp}</h4>
         </div>
       </div>
       
@@ -25,21 +26,21 @@ const WaitingForDriver = (props) => {
           <div className='flex items-center gap-4 border-b-2 border-gray-300 p-3'>
             <i className="ri-map-pin-user-line"></i>
             <div>
-                <h3 className='text-lg font-medium'>562/11-A</h3>
-                <p className='text-gray-700 -mt-1'>Lake city, Bhopal</p>
+                <h3 className='text-lg font-medium'>{props.ride?.pickup.split(" ")[0]}</h3>
+                <p className='text-gray-700 -mt-1'>{props.ride?.pickup}</p>
             </div>
             </div>
             <div className='flex items-center gap-4 border-b-2 border-gray-300 p-3'>
             <i className="ri-map-pin-line"></i>
             <div>
-                <h3 className='text-lg font-medium'>562/11-A</h3>
-                <p className='text-gray-700 -mt-1'>Lake city, Bhopal</p>
+                <h3 className='text-lg font-medium'>{props.ride?.destination.split(" ")[0]}</h3>
+                <p className='text-gray-700 -mt-1'>{props.ride?.destination}</p>
             </div>
             </div>
             <div className='flex items-center gap-4 p-3'>
             <i className="ri-currency-line"></i>
             <div>
-                <h3 className='text-lg font-medium'>₹193</h3>
+                <h3 className='text-lg font-medium'>₹{props.ride?.fare}</h3>
                 <p className='text-gray-700 -mt-1'>Cash Cash</p>
             </div>
             </div>

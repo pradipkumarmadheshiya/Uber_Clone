@@ -30,9 +30,10 @@ const CaptainLogin = () => {
   return (
     <div className='p-7 flex h-screen flex-col justify-between'>
       <div>
-        <img className='w-16 mb-10' src={assets.captain_uber_logo} alt="" />
+        <img className='w-16 mb-6' src={assets.captain_uber_logo} alt="" />
 
         <form onSubmit={submitHandler}>
+          <h2 className='text-2xl font-medium text-center mb-4'>Login Captain</h2>
           <h3 className='text-lg mb-2'>What's your email</h3>
           <input className='bg-gray-100 mb-7 rounded px-4 py-2  w-full text-lg placeholder:text-base'
           type="email" name="email" placeholder='email@example.com' required 

@@ -53,9 +53,10 @@ const CaptainSignup = () => {
   return (
     <div className='p-7 flex h-screen flex-col justify-between'>
       <div>
-        <img className='w-16 mb-10' src={assets.captain_uber_logo} alt="" />
+        <img className='w-16 mb-6' src={assets.captain_uber_logo} alt="" />
 
         <form onSubmit={submitHandler}>
+          <h2 className='text-2xl font-medium text-center mb-4'>Signup Captain</h2>
           <h3 className='text-lg mb-2'>What's our captain's name</h3>
           <div className='flex gap-3 mb-5'>
             <input className='bg-gray-100 w-1/2 rounded px-4 py-2 text-base placeholder:text-base'

@@ -12,9 +12,11 @@ const UserContext = ({children}) => {
     email:""
   })
 
+  const [vehicleType, setVehicleType] = useState("");
+  
   return (
     <div>
-      <UserDataContext.Provider value={{user, setUser}}>
+      <UserDataContext.Provider value={{user, setUser, vehicleType, setVehicleType}}>
         {children}
       </UserDataContext.Provider>
     </div>

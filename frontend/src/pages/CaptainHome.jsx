@@ -100,7 +100,7 @@ const CaptainHome = () => {
           to={"/captain/logout"}
           className="h-10 w-10 bg-white flex items-center justify-center rounded-full"
         >
-          <i className="text-lg font-medium ri-logout-box-r-line"></i>
+          <i className="text-lg font-medium ri-logout-box-r-line"></i> 
         </Link>
       </div>
 

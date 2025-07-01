@@ -1,8 +1,23 @@
 import React from 'react'
 import { assets } from '../assets/assets';
-import { Link } from 'react-router-dom';
+import axios from "axios"
+import {useNavigate} from "react-router-dom"
 
 const FinishRide = (props) => {
+
+  const navigate=useNavigate()
+
+  async function endRide(){
+    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`,
+      {rideId:props.ride._id},
+      {headers:{Authorization:`Bearer ${localStorage.getItem("captain-token")}`}}
+    )
+
+    if(response.status===200){
+      navigate("/captain-home")
+    }
+  }
+
   return (
     <div>
       <h5
@@ -20,7 +35,7 @@ const FinishRide = (props) => {
             src={assets.random_people}
             alt=""
           />
-          <h2 className="text-lg font-medium">Ankit Sharma</h2>
+          <h2 className="text-lg font-medium">{props.ride?.user.fullname.firstname}</h2>
         </div>
         <h5>2.2 KM</h5>
       </div>
@@ -30,33 +45,34 @@ const FinishRide = (props) => {
           <div className="flex items-center gap-4 border-b-2 border-gray-300 p-3">
             <i className="ri-map-pin-user-line"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-gray-700 -mt-1">Lake city, Bhopal</p>
+              <h3 className="text-lg font-medium">{props.ride?.pickup.split(" ")[0]}</h3>
+              <p className="text-gray-700 -mt-1">{props.ride?.pickup}</p>
             </div>
           </div>
           <div className="flex items-center gap-4 border-b-2 border-gray-300 p-3">
             <i className="ri-map-pin-line"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-gray-700 -mt-1">Lake city, Bhopal</p>
+              <h3 className="text-lg font-medium">{props.ride?.destination.split(" ")[0]}</h3>
+              <p className="text-gray-700 -mt-1">{props.ride?.destination}</p>
             </div>
           </div>
           <div className="flex items-center gap-4 p-3">
             <i className="ri-currency-line"></i>
             <div>
-              <h3 className="text-lg font-medium">₹193</h3>
+              <h3 className="text-lg font-medium">₹{props.ride.fare}</h3>
               <p className="text-gray-700 -mt-1">Cash Cash</p>
             </div>
           </div>
         </div>
 
         <div className="mt-6 w-full">
-            <Link
-              to={"/captain-home"}
+            <button
+              onClick={endRide}
               className="flex justify-center w-full bg-green-600 text-white font-semibold p-2 rounded-lg mt-5"
             >
               Finish Ride
-            </Link>
+            </button>
+
             <p className='mt-4 text-sm text-gray-500'>Click on Finish Ride if You have completed the payment.</p>
         </div>
       </div>

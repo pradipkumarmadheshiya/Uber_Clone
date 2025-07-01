@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import "remixicon/fonts/remixicon.css";
+import { useContext, useEffect, useRef, useState } from "react";
 import { assets } from "../assets/assets";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../component/LocationSearchPanel";
 import VehiclePanel from "../component/VehiclePanel";
 import ConfirmRide from "../component/ConfirmRide";
@@ -11,21 +11,21 @@ import WaitingForDriver from "../component/WaitingForDriver";
 import axios from "axios";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import LiveTracking from "../component/LiveTracking";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
-  const [vehicleType, setVehicleType] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
   const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false);
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [waitingForDriver, setWaitingForDriver] = useState(false);
   const [activeField, setActiveField] = useState(null);
-  const [ride, setRide]=useState(null)
+  const [ride, setRide] = useState(null);
   const [fare, setFare] = useState({});
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
@@ -36,7 +36,8 @@ const Home = () => {
 
   const { socket } = useContext(SocketContext);
   const { user } = useContext(UserDataContext);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const { vehicleType, setVehicleType } = useContext(UserDataContext);
 
   useEffect(() => {
     socket.emit("join", { userType: "user", userId: user._id });
@@ -48,10 +49,10 @@ const Home = () => {
     setRide(ride);
   });
 
-  socket.on("ride-started", data=>{
-    setWaitingForDriver(false)
-    navigate("/riding")
-  })
+  socket.on("ride-started", (data) => {
+    setWaitingForDriver(false);
+    navigate("/riding", { state: { ride: ride } });
+  });
 
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
@@ -192,18 +193,14 @@ const Home = () => {
 
   return (
     <div className="h-screen relative overflow-hidden">
-      <img
-        className="w-16 absolute top-5 left-5 "
-        src={assets.logo}
-        alt="logo"
-      />
+        <img
+          className="w-16 absolute left-5 top-5"
+          src={assets.logo}
+          alt="logo"
+        />
 
       <div className="h-screen w-screen">
-        <img
-          className="h-full w-full object-cover"
-          src={assets.map_2}
-          alt="map"
-        />
+        <LiveTracking/>
       </div>
 
       <div className="h-screen flex flex-col justify-end  absolute top-0 w-full">
@@ -284,7 +281,6 @@ const Home = () => {
           setVehiclePanelOpen={setVehiclePanelOpen}
           fare={fare}
           setVehicleType={setVehicleType}
-          vehicleType
         />
       </div>
 
@@ -320,11 +316,11 @@ const Home = () => {
         ref={waitingForDriverRef}
         className="fixed z-10 w-full bottom-0 translate-y-full p-3 bg-white px-3 py-6 pt-12"
       >
-        <WaitingForDriver 
-        setWaitingForDriver={setWaitingForDriver} 
-        setVehicleFound={setVehicleFound}
-        waitingForDriver={waitingForDriver}
-        ride={ride}
+        <WaitingForDriver
+          setWaitingForDriver={setWaitingForDriver}
+          setVehicleFound={setVehicleFound}
+          waitingForDriver={waitingForDriver}
+          ride={ride}
         />
       </div>
     </div>

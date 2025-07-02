@@ -92,7 +92,7 @@ const ConfirmRidePopUp = (props) => {
                 props.setConfirmRidePopUp(false);
                 props.setRidePopUpPanel(false);
               }}
-              className="flex justify-center w-full bg-green-600 text-white font-semibold p-2 rounded-lg mt-5"
+              className="flex justify-center w-full bg-green-600 text-white font-semibold p-2 rounded-lg mt-5 cursor-pointer"
             >
               Confirm
             </button>

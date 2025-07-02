@@ -18,7 +18,7 @@ const VehiclePanel = (props) => {
           props.setVehiclePanelOpen(false)
           props.setVehicleType("car")
         }}
-        className="flex items-center justify-between w-full p-3 active:border-black border-2 border-gray-300 bg-gray-100 rounded-xl mb-2"
+        className="flex items-center justify-between w-full p-3 active:border-black border-2 border-gray-300 bg-gray-100 rounded-xl mb-2 cursor-pointer"
       >
         <img className="w-16" src={assets.car} alt="car" />
         <div className=" w-1/2">
@@ -39,7 +39,7 @@ const VehiclePanel = (props) => {
           props.setVehiclePanelOpen(false);
           props.setVehicleType("moto")
         }}
-        className="flex items-center justify-between w-full p-3 border-2 bg-gray-100 active:border-black border-gray-300 rounded-xl mb-2"
+        className="flex items-center justify-between w-full p-3 border-2 bg-gray-100 active:border-black border-gray-300 rounded-xl mb-2 cursor-pointer"
       >
         <img className="w-22" src={assets.moto} alt="moto" />
         <div className=" w-1/2">
@@ -60,7 +60,7 @@ const VehiclePanel = (props) => {
           props.setVehiclePanelOpen(false);
           props.setVehicleType("auto")
         }}
-        className="flex items-center justify-between w-full p-3 border-2 bg-gray-100 active:border-black border-gray-300 rounded-xl mb-2"
+        className="flex items-center justify-between w-full p-3 border-2 bg-gray-100 active:border-black border-gray-300 rounded-xl mb-2 cursor-pointer"
       >
         <img className="w-14" src={assets.auto} alt="auto" />
         <div className=" w-1/2">

@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import FinishRide from "../component/FinishRide";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import LiveTracking from "../component/LiveTracking";
 
 const CaptainRiding = () => {
 
@@ -40,11 +41,7 @@ const CaptainRiding = () => {
       </div>
 
       <div className="h-4/5">
-        <img
-          className="h-full w-full object-cover"
-          src={assets.map}
-          alt="map"
-        />
+        <LiveTracking/>
       </div>
 
       <div onClick={()=>setFinishRidePanel(true)}

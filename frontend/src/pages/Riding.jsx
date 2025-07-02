@@ -3,6 +3,7 @@ import { assets } from '../assets/assets'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { UserDataContext } from '../context/UserContext'
 import {SocketContext} from "../context/SocketContext"
+import LiveTracking from '../component/LiveTracking'
 
 const Riding = () => {
 
@@ -23,8 +24,7 @@ const Riding = () => {
         </Link>
 
       <div className='h-1/2'>
-        <img  className='h-full w-full object-cover'
-            src={assets.map} alt="map" />
+        <LiveTracking/>
       </div>
       <div className='h-1/2 p-4'>
 
@@ -61,7 +61,7 @@ const Riding = () => {
         </div>
 
         <button
-            className='w-full bg-green-600 text-white font-semibold p-2 rounded-lg mt-5 cursor-pointer'>
+            className='w-full bg-green-600 text-white font-semibold p-2 rounded-lg mt-5 cursor-pointer mb-4'>
             Make a Payment
         </button>
       </div>

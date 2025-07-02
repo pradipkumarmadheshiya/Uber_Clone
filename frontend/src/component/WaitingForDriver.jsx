@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
+import {UserDataContext} from "../context/UserContext"
 
 const WaitingForDriver = (props) => {
+
+  const {vehicleType}=useContext(UserDataContext)
+
   return (
     <div>
       <h5 className='p-3 text-center absolute top-0 w-full'
@@ -11,7 +15,7 @@ const WaitingForDriver = (props) => {
 
       <div className='flex items-center justify-between'>
         <img className='h-10 mt-2'
-          src={assets.car} alt="car" />
+          src={assets[vehicleType]} alt="car" />
         <div className='text-right'>
           <h2 className='text-lg font-medium'>{props.ride?.captain.fullname.firstname+" "+props.ride?.captain.fullname.lastname}</h2>
           <h4 className='text-xl font-semibold -mt-1 -mb-1'>{props.ride?.captain.vehicle.plate}</h4>

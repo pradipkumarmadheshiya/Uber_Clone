@@ -12,7 +12,15 @@ const rideRoutes=require("./routes/ride.routes")
 
 connectToDb()
 
-app.use(cors())
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://uber-clone-frontend-hhwd.onrender.com"
+];
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())

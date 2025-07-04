@@ -192,7 +192,7 @@ const CaptainSignup = () => {
           </select>
 
           <button className="bg-[#111] text-[#fff] font-semibold mb-3 rounded px-4 py-2  w-full text-lg cursor-pointer">
-            {loading ? "Loading" : "Signup as Captain"}
+            {loading ? "Loading..." : "Signup as Captain"}
           </button>
 
           <p className="text-center mb-16">
